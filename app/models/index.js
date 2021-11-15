@@ -8,12 +8,12 @@ const stockFactory = require('./stock')
 
 
 const sequelize = new Sequelize({
-	host: 'localhost',
-	dialect: 'postgres',
-	port: '5432',
-	username: 'postgres',
-	password: 'syamil',
-	database: 'inv',
+	host: process.env.DB_HOST,
+	dialect: process.env.DB_DIALECT,
+	port: process.env.DB_PORT,
+	username: process.env.DB_USERNAME,
+	password: process.env.DB_PASSWORD,
+	database: process.env.DB_NAME,
 	define: {
 		freezeTableName: true
 	}
