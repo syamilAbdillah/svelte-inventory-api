@@ -45,5 +45,9 @@ sequelize.sync()
 module.exports = { 
 	sequelize,
 	user,
-	supplier 
+	supplier,
+	unit,
+	category,
+	product,
+	stock 
 }

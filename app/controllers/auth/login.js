@@ -33,7 +33,7 @@ module.exports = ({jwt, userModel, bcrypt}) => async (req, res) => {
 			id: user.id,
 			role: user.role  
 		}, 
-		'myAccessTokenSecretKey')
+		process.env.SECRET_KEY_AT)
 
 		res.status(200)
 		res.json({

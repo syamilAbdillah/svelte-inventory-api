@@ -9,6 +9,7 @@ module.exports = (unitModel) => async (req, res) => {
 			data: createdUnit
 		})
 	}catch(error){
+		console.log(error)
 		res.status(500)
 		res.json({
 			status: 500,

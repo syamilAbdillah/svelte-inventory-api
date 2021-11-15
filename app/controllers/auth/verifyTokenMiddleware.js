@@ -15,7 +15,7 @@ module.exports = (userModel) => (req, res, next) => {
 	const accessToken = req.headers.authorization.split(' ')[1]
 
 	try	{
-		jwt.verify(accessToken, 'myAccessTokenSecretKey', async (error, user) => {
+		jwt.verify(accessToken, process.env.SECRET_KEY_AT, async (error, user) => {
 			if(error) {
 				res.status(401)
 				res.json({
