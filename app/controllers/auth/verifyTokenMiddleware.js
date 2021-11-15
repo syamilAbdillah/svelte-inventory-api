@@ -1,9 +1,21 @@
-module.exports = (jwt, userModel) => (req, res, next) => {
+const jwt = require('jsonwebtoken')
+
+module.exports = (userModel) => (req, res, next) => {
 	
+	if(!req.headers.authorization) {
+		res.status(401)
+		res.json({
+			status: 401,
+			message: 'unauthorize'
+		})
+
+		return
+	}
+
 	const accessToken = req.headers.authorization.split(' ')[1]
 
 	try	{
-		jwt.varify(accessToken, 'myAccessTokenSecretKey', async (error, user) => {
+		jwt.verify(accessToken, 'myAccessTokenSecretKey', async (error, user) => {
 			if(error) {
 				res.status(401)
 				res.json({
@@ -30,6 +42,6 @@ module.exports = (jwt, userModel) => (req, res, next) => {
 			next()
 		})
 	} catch(error) {
-		nex(error)
+		next(error)
 	}
 }
