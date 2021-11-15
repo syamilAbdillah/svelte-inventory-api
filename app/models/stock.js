@@ -28,7 +28,7 @@ module.exports = ({sequelize, DataTypes, product, user}) => {
 				key: 'id'
 			}
 		},
-		userId: {
+		createdBy: {
 			type: DataTypes.UUID,
 			allowNull: false,
 			references: {

@@ -6,16 +6,18 @@ const unitController = require('./unit')
 const authController = require('./auth')
 const categoryController = require('./category')
 const supplierController = require('./supplier')
+const productController = require('./product')
 
 const userModel = require('../models').user
 const verifyToken = require('./auth/verifyTokenMiddleware')(userModel)
 
 publicRouter.use('/user', authController)
 
-privateRouter.use('/user', verifyToken, userController)
+privateRouter.use('/user', userController)
 privateRouter.use('/unit', unitController)
 privateRouter.use('/category', categoryController)
 privateRouter.use('/supplier', supplierController)
+privateRouter.use('/product', productController)
 
 router.use(publicRouter)
 router.use(verifyToken, privateRouter)

@@ -6,7 +6,7 @@ const categoryFactory = require('./category')
 const productFactory = require('./product')
 const stockFactory = require('./stock')
 
-
+// get connection
 const sequelize = new Sequelize({
 	host: process.env.DB_HOST,
 	dialect: process.env.DB_DIALECT,
@@ -19,6 +19,8 @@ const sequelize = new Sequelize({
 	}
 }) 
 
+
+// initialize model
 const user = userFactory(sequelize, DataTypes)
 
 const supplier = supplierFactory(sequelize, DataTypes)
@@ -39,6 +41,24 @@ const stock = stockFactory({
 	product,
 	user
 })
+
+
+// defining relationship between model
+supplier.hasMany(product)
+unit.hasMany(product)
+category.hasMany(product)
+
+product.belongsTo(supplier)
+product.belongsTo(unit)
+product.belongsTo(category)
+
+product.hasMany(stock)
+user.hasMany(stock)
+
+stock.belongsTo(product)
+stock.belongsTo(user)
+
+
 
 sequelize.sync()
 
