@@ -14,7 +14,7 @@ const verifyToken = require('./auth/verifyTokenMiddleware')(userModel)
 
 publicRouter.use('/user', authController)
 
-publicRouter.use('/user', userController)
+privateRouter.use('/user', userController)
 privateRouter.use('/unit', unitController)
 privateRouter.use('/category', categoryController)
 privateRouter.use('/supplier', supplierController)

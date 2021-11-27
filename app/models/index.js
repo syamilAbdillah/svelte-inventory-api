@@ -5,6 +5,7 @@ const unitFactory = require('./unit')
 const categoryFactory = require('./category')
 const productFactory = require('./product')
 const stockFactory = require('./stock')
+const refresTokenFactory = require('./refresh-token')
 
 // get connection
 const sequelize = new Sequelize({
@@ -22,6 +23,7 @@ const sequelize = new Sequelize({
 
 // initialize model
 const user = userFactory(sequelize, DataTypes)
+const refreshToken = refresTokenFactory(sequelize, DataTypes)
 
 const supplier = supplierFactory(sequelize, DataTypes)
 const unit = unitFactory(sequelize, DataTypes)
@@ -69,5 +71,6 @@ module.exports = {
 	unit,
 	category,
 	product,
-	stock 
+	stock,
+	refreshToken 
 }

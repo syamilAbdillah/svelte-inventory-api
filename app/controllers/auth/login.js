@@ -1,4 +1,7 @@
-module.exports = ({jwt, userModel, bcrypt}) => async (req, res) => {
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+
+module.exports = ({userModel, refreshTokenModel}) => async (req, res) => {
 	const { email, password } = req.body
 
 	try {
@@ -29,17 +32,24 @@ module.exports = ({jwt, userModel, bcrypt}) => async (req, res) => {
 		}
 
 
-		const accessToken = jwt.sign({ 
+		const tokenPayload = { 
 			id: user.id,
 			role: user.role  
-		}, 
-		process.env.SECRET_KEY_AT)
+		}
+
+		const accessToken = jwt.sign(tokenPayload, process.env.SECRET_KEY_AT, {expiresIn: '30m'})
+		const refresToken = jwt.sign(tokenPayload, process.env.SECRET_KEY_RT, {expiresIn: '1d'})
+
+		const isUserTokenExist = await refreshTokenModel.findOne({ where: { userId: user.id } })
+		const persistedToken = isUserTokenExist ? 
+			await refreshTokenModel.update({ token: refresToken }, { where: { userId: user.id } }):
+			await refreshTokenModel.create({ token: refresToken, userId: user.id })
 
 		res.status(200)
 		res.json({
 			status: 200,
 			message: 'success login',
-			data: { accessToken }
+			data: { accessToken, refresToken }
 		})
 
 	} catch(error) {
