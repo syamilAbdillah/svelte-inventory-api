@@ -38,18 +38,18 @@ module.exports = ({userModel, refreshTokenModel}) => async (req, res) => {
 		}
 
 		const accessToken = jwt.sign(tokenPayload, process.env.SECRET_KEY_AT, {expiresIn: '30m'})
-		const refresToken = jwt.sign(tokenPayload, process.env.SECRET_KEY_RT, {expiresIn: '1d'})
+		const refreshToken = jwt.sign(tokenPayload, process.env.SECRET_KEY_RT, {expiresIn: '1d'})
 
 		const isUserTokenExist = await refreshTokenModel.findOne({ where: { userId: user.id } })
 		const persistedToken = isUserTokenExist ? 
-			await refreshTokenModel.update({ token: refresToken }, { where: { userId: user.id } }):
-			await refreshTokenModel.create({ token: refresToken, userId: user.id })
+			await refreshTokenModel.update({ token: refreshToken }, { where: { userId: user.id } }):
+			await refreshTokenModel.create({ token: refreshToken, userId: user.id })
 
 		res.status(200)
 		res.json({
 			status: 200,
 			message: 'success login',
-			data: { accessToken, refresToken }
+			data: { accessToken, refreshToken }
 		})
 
 	} catch(error) {
