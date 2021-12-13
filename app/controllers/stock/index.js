@@ -24,4 +24,9 @@ router.get('/dec', getStockDecs)
 router.put('/dec/:id', updateStockDec)
 router.delete('/dec/:id', deleteStockDec)
 
+const sequelize = require('../../models').sequelize
+const productModel = require('../../models').product
+const report = require('./report')(productModel, sequelize)
+router.get('/report', report)
+
 module.exports = router

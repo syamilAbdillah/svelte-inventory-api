@@ -8,6 +8,7 @@ const categoryController = require('./category')
 const supplierController = require('./supplier')
 const productController = require('./product')
 const stockController = require('./stock')
+const dashboardController = require('./dashboard')
 
 const userModel = require('../models').user
 const verifyToken = require('./auth/verifyTokenMiddleware')(userModel)
@@ -20,6 +21,7 @@ privateRouter.use('/category', categoryController)
 privateRouter.use('/supplier', supplierController)
 privateRouter.use('/product', productController)
 privateRouter.use('/stock', stockController)
+privateRouter.use('/dashboard', dashboardController)
 
 router.use(publicRouter)
 router.use(verifyToken, privateRouter)

@@ -11,13 +11,13 @@ module.exports = ({refreshTokenModel, userModel}) => (req, res) => {
 		return
 	}
 
-	const refreshToken = req.headers.authorization.split(' ')[1]
+	const refreshToken = req.headers.authorization
 	jwt.verify(refreshToken, process.env.SECRET_KEY_RT, async (error, user) => {
 		if(error) {
-			res.status(401)
+			res.status(403)
 			res.json({
-				status: 401,
-				message: 'unauthorize'
+				status: 403,
+				message: 'forbidden'
 			})
 
 			return
@@ -43,8 +43,8 @@ module.exports = ({refreshTokenModel, userModel}) => (req, res) => {
 			}
 
 			const { exp } = jwt.decode(refreshToken)
-			const newRefreshToken = jwt.sign({id: user.id, role: user.role, exp}, process.env.SECRET_KEY_RT)
-			const newAccessToken = jwt.sign({id: user.id, role: user.role}, process.env.SECRET_KEY_AT, { expiresIn: '15m' })
+			const newRefreshToken = jwt.sign({id: user.id, name: user.name, role: user.role, exp}, process.env.SECRET_KEY_RT)
+			const newAccessToken = jwt.sign({id: user.id, name: user.name, role: user.role}, process.env.SECRET_KEY_AT, { expiresIn: '15m' })
 			const persistedToken = await refreshTokenModel.update({ token: newRefreshToken }, {  
 				where: {userId: user.id}
 			})

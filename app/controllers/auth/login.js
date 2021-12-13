@@ -34,7 +34,8 @@ module.exports = ({userModel, refreshTokenModel}) => async (req, res) => {
 
 		const tokenPayload = { 
 			id: user.id,
-			role: user.role  
+			role: user.role,
+			name: user.name
 		}
 
 		const accessToken = jwt.sign(tokenPayload, process.env.SECRET_KEY_AT, {expiresIn: '30m'})
