@@ -3,7 +3,7 @@ module.exports = (userModel) => async (req, res) => {
 
 	try {
 		const user = await userModel.findByPk(id, {
-			attributes: ['id', 'name', 'email', 'role', 'createdAt']
+			attributes: ['id', 'name', 'email', 'profile', 'role', 'createdAt']
 		})
 
 		res.status(200)

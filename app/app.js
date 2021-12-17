@@ -10,6 +10,8 @@ app.use(express.urlencoded())
 app.use(cors({
 	exposedHeaders: '*'
 }))
+app.use('/static', express.static('static'))
+app.use('/uploads', express.static('uploads'))
 
 app.use(controllers)
 
